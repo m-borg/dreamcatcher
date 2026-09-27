@@ -1,4 +1,5 @@
-<img width="1710" height="947" alt="Screenshot 2026-09-05 at 09 14 35" src="https://github.com/user-attachments/assets/61d10a21-bb77-4dfa-b6ca-09e9a3e8c891" />
+<img width="3404" height="1858" alt="Screenshot 2026-09-05 at 09 14 35 copy" src="https://github.com/user-attachments/assets/9be580a4-dd9b-4b36-8a11-bc3f74b1a8c2" />
+
 
 # Dreamcatcher
 
