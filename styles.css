@@ -1,0 +1,579 @@
+:root {
+    --bg-color: #0f1115;
+    --text-color: #e0e0e0;
+    --accent-color: #e5a00d; /* Plex-ish orange */
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --card-border: rgba(255, 255, 255, 0.1);
+    --glass-blur: 12px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Glassmorphism setup */
+.glass-panel {
+    background: var(--card-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 40px;
+    text-align: center;
+}
+
+#setup-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.setup-panel h1 {
+    margin-top: 0;
+    color: white;
+}
+
+.setup-panel input {
+    width: 100%;
+    padding: 12px;
+    margin: 20px 0;
+    border-radius: 8px;
+    border: 1px solid var(--card-border);
+    background: rgba(0, 0, 0, 0.2);
+    color: white;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.setup-panel button {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.setup-panel button:hover {
+    background-color: #f7b226;
+}
+
+.error-msg {
+    color: #ff6b6b;
+    font-size: 13px;
+    margin-bottom: 12px;
+    text-align: left;
+}
+
+.small-text {
+    font-size: 12px;
+    color: #aaa;
+    margin-top: 20px;
+}
+
+.small-text a {
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+/* Dashboard */
+#dashboard-container {
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+    flex: 1;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+header h1 {
+    font-size: 32px;
+    font-weight: 700;
+    margin: 0;
+    color: white;
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.toggle-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--card-border);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    user-select: none;
+    transition: background 0.2s;
+}
+
+.toggle-label:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.toggle-label input {
+    cursor: pointer;
+}
+
+.controls select {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid var(--card-border);
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+.controls select option {
+    background: var(--bg-color);
+    color: white;
+}
+
+.control-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid var(--card-border);
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+.control-btn:hover {
+    background: rgba(255, 255, 255, 0.18);
+}
+
+/* Status / Empty Message */
+.status-message {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border-radius: 12px;
+    padding: 30px;
+    text-align: center;
+    margin: 20px 0 30px;
+    color: #ccc;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.status-message h3 {
+    margin-top: 0;
+    color: white;
+}
+
+.status-message button {
+    margin-top: 15px;
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 9px 18px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.status-message button:hover {
+    background-color: #f7b226;
+}
+
+.movie-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 30px;
+}
+
+.genre-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-4px); }
+    100% { transform: translateY(0px); }
+}
+
+.genre-btn {
+    --weight: var(--genre-weight, 0.5);
+    background: rgba(255, 255, 255, calc(0.02 + 0.08 * var(--weight)));
+    border: 1px solid rgba(255, 255, 255, calc(0.05 + 0.15 * var(--weight)));
+    color: rgba(255, 255, 255, calc(0.5 + 0.5 * var(--weight)));
+    padding: calc(6px + 4px * var(--weight)) calc(12px + 8px * var(--weight));
+    border-radius: 30px;
+    font-size: calc(11px + 5px * var(--weight));
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    animation: float 4s ease-in-out infinite;
+    animation-delay: calc(var(--weight) * -5s);
+}
+
+.genre-count {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-size: 0.8em;
+    opacity: 0.8;
+}
+
+.genre-btn:hover {
+    transform: translateY(-5px) scale(1.05);
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    border-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 10px 25px rgba(255, 255, 255, 0.1);
+    animation-play-state: paused;
+}
+
+.genre-btn.active {
+    background: linear-gradient(135deg, var(--accent-color), #ff6b00);
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 8px 25px rgba(229, 160, 13, 0.6), inset 0 2px 5px rgba(255, 255, 255, 0.3);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    animation-play-state: paused;
+    transform: translateY(-2px);
+}
+
+.genre-btn.active .genre-count {
+    background: rgba(0, 0, 0, 0.2);
+    color: white;
+}
+
+.genre-btn.excluded {
+    background: linear-gradient(135deg, #c0392b, #8e1a10);
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 8px 25px rgba(192, 57, 43, 0.65), inset 0 2px 5px rgba(255, 255, 255, 0.15);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+    animation-play-state: paused;
+    transform: translateY(-2px);
+    opacity: 0.85;
+}
+
+.genre-btn.excluded span:first-child {
+    text-decoration: line-through;
+    text-decoration-color: rgba(255, 255, 255, 0.5);
+}
+
+.genre-btn.excluded .genre-count {
+    background: rgba(0, 0, 0, 0.2);
+    color: white;
+}
+
+.decade-header {
+    grid-column: 1 / -1;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--accent-color);
+    border-bottom: 1px solid var(--card-border);
+    padding-bottom: 10px;
+    text-align: left;
+    margin-top: 10px;
+}
+
+/* Original Clean Movie Card: NO borders, seamless poster fit */
+.movie-card {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: var(--card-bg);
+    aspect-ratio: 2 / 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #888;
+}
+
+.movie-card:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 3px;
+}
+
+.movie-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.movie-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+    z-index: 10;
+}
+
+.movie-card:hover img {
+    transform: scale(1.02);
+}
+
+.movie-card .filesize,
+.movie-card .duration {
+    display: none;
+    position: absolute;
+    top: 8px;
+    background: rgba(0, 0, 0, 0.75);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    pointer-events: none;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.movie-card .filesize {
+    right: 8px;
+}
+
+.movie-card .duration {
+    left: 8px;
+}
+
+body.show-filesize .movie-card .filesize {
+    display: block;
+}
+
+body.show-duration .movie-card .duration {
+    display: block;
+}
+
+.fallback-title {
+    padding: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #bbb;
+    word-break: break-word;
+}
+
+/* Skeleton Loader */
+.movie-card.skeleton {
+    background: linear-gradient(90deg, var(--card-bg) 25%, rgba(255, 255, 255, 0.08) 50%, var(--card-bg) 75%);
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s infinite;
+    cursor: default;
+    pointer-events: none;
+}
+
+.movie-card.skeleton:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+@keyframes skeleton-loading {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+/* Settings Modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-card {
+    max-width: 460px;
+    width: 90%;
+    text-align: left;
+    padding: 30px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--card-border);
+    padding-bottom: 10px;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 20px;
+    color: white;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+}
+
+.close-btn:hover {
+    color: white;
+}
+
+.settings-group {
+    margin-bottom: 20px;
+}
+
+.settings-group label {
+    display: block;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: white;
+}
+
+.input-action-row {
+    display: flex;
+    gap: 10px;
+}
+
+.input-action-row input {
+    flex: 1;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--card-border);
+    background: rgba(0, 0, 0, 0.2);
+    color: white;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.secondary-btn {
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+    white-space: nowrap;
+}
+
+.secondary-btn:hover {
+    background: #f7b226;
+}
+
+.danger-btn {
+    background: rgba(231, 76, 60, 0.2);
+    color: #ff7675;
+    border: 1px solid rgba(231, 76, 60, 0.4);
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background 0.2s;
+}
+
+.danger-btn:hover {
+    background: rgba(231, 76, 60, 0.4);
+    color: white;
+}
+
+.settings-description {
+    font-size: 12px;
+    color: #aaa;
+    margin: 4px 0 12px;
+    line-height: 1.4;
+}
+
+.folder-info {
+    border-top: 1px solid var(--card-border);
+    padding-top: 16px;
+    margin-bottom: 0;
+}
+
+.folder-info strong {
+    color: var(--accent-color);
+}
+
+.settings-feedback {
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    margin-bottom: 14px;
+}
+
+.settings-feedback.success {
+    background: rgba(46, 204, 113, 0.15);
+    border: 1px solid rgba(46, 204, 113, 0.3);
+    color: #2ecc71;
+}
+
+.settings-feedback.error {
+    background: rgba(231, 76, 60, 0.15);
+    border: 1px solid rgba(231, 76, 60, 0.3);
+    color: #ff6b6b;
+}

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dreamcatcher</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="setup-container" class="hidden">
+        <div class="glass-panel setup-panel">
+            <h1>Welcome to Dreamcatcher</h1>
+            <p>To fetch beautiful movie posters and metadata, please enter your free TMDB API Key (v3).</p>
+            <input type="text" id="api-key-input" placeholder="TMDB API Key">
+            <div id="setup-error" class="error-msg hidden"></div>
+            <button id="save-key-btn">Save Key</button>
+            <p class="small-text">You can get a free key at <a href="https://www.themoviedb.org/settings/api"
+                    target="_blank" rel="noopener noreferrer">themoviedb.org</a></p>
+        </div>
+    </div>
+
+    <div id="dashboard-container" class="hidden">
+        <header>
+            <h1>Movies Library</h1>
+            <div class="controls">
+                <label class="toggle-label" title="Show or hide file size overlay">
+                    <input type="checkbox" id="filesize-toggle">
+                    <span class="toggle-text">Show Filesize</span>
+                </label>
+                <label class="toggle-label" title="Show or hide movie runtime overlay">
+                    <input type="checkbox" id="duration-toggle">
+                    <span class="toggle-text">Show Duration</span>
+                </label>
+                <label class="toggle-label" title="Fetch Japanese release posters">
+                    <input type="checkbox" id="jp-poster-toggle">
+                    <span class="toggle-text">🇯🇵 JP Posters</span>
+                </label>
+                <select id="sort-select" title="Sort movies">
+                    <option value="added-desc" selected>Recently Added</option>
+                    <option value="added-asc">Oldest Added</option>
+                    <option value="title-asc">Title (A-Z)</option>
+                    <option value="title-desc">Title (Z-A)</option>
+                    <option value="date-desc">Newest Release</option>
+                    <option value="date-asc">Oldest Release</option>
+                    <option value="popularity-desc">Most Popular</option>
+                    <option value="rating-desc">Top Rated</option>
+                    <option value="size-desc">Largest Size</option>
+                    <option value="size-asc">Smallest Size</option>
+                    <option value="duration-desc">Longest Duration</option>
+                    <option value="duration-asc">Shortest Duration</option>
+                </select>
+                <button id="refresh-btn" class="control-btn" title="Refresh Library" aria-label="Refresh Library">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>
+                </button>
+                <button id="settings-btn" class="control-btn" title="Settings" aria-label="Open Settings">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                </button>
+            </div>
+        </header>
+        <main>
+            <div id="genre-filters" class="genre-filters"></div>
+            <div id="status-message" class="status-message hidden"></div>
+            <div id="movie-grid" class="movie-grid">
+                <!-- Movie posters will be injected here -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="settings-title">
+        <div class="glass-panel modal-card">
+            <div class="modal-header">
+                <h2 id="settings-title">Settings</h2>
+                <button id="close-settings-btn" class="close-btn" aria-label="Close settings">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="settings-group">
+                    <label for="settings-api-key">TMDB API Key (v3)</label>
+                    <div class="input-action-row">
+                        <input type="text" id="settings-api-key" placeholder="Enter TMDB API Key">
+                        <button id="update-key-btn" class="secondary-btn">Save Key</button>
+                    </div>
+                </div>
+                <div id="settings-msg" class="settings-feedback hidden"></div>
+                <div class="settings-group">
+                    <label>Metadata & Poster Cache</label>
+                    <p class="settings-description">Clearing cache forces Dreamcatcher to re-fetch metadata and posters from TMDB and Pixeldrain on next load.</p>
+                    <button id="clear-cache-btn" class="danger-btn">Clear Cache</button>
+                </div>
+                <div class="settings-group folder-info">
+                    <label>Bookmarks Setup</label>
+                    <p class="settings-description">Create a bookmarks folder in Chrome named <strong>mv</strong> (or <strong>Movies</strong>) containing <strong>pixeldrain.com</strong> movie links.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
